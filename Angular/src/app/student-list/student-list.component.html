@@ -1,0 +1,73 @@
+
+<div class="mt-3">
+
+  Students per page:
+  <select (change)="handlePageSizeChange($event)">
+    <option *ngFor="let size of pageSizes" [ngValue]="size">
+      {{ size }}
+    </option>
+  </select>
+</div>
+
+<div class="col-md-8">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by fullName"
+      [(ngModel)]="fullName"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="searchName()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Contact Number</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of listOfData | paginate : {
+              itemsPerPage: pageSize,
+              currentPage: page,
+              totalItems: count
+            };
+      let i = index" [class.active]="i == currentIndex">
+      <th scope="row">{{student.id}}</th>
+      <td>{{student.fullName}}</td>
+      <td>{{ student.email }}</td>
+             <td>{{ student.phoneNumber}}</td>
+           
+             <td>
+                <button type="button" routerLink="/student/{{ student.id }}" >Edit</button>
+                <button type="button"  (click)="openConfirmationDialog(student.id)">Delete</button>
+             </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="col-md-12">
+  <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    [responsive]="true"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div>
+
+<li class="nav-item">
+  <button type="button" routerLink="/student">Add Student</button>
+</li>

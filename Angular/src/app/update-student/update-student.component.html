@@ -1,0 +1,37 @@
+<h4>Student</h4>
+<div class="form-group">
+  <label for="fullName">Full Name</label>
+  <input type="text" class="form-control" id="fullName" [(ngModel)]="currentStudent.fullName" name="fullName" />
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <input type="number" class="form-control" id="phoneNumber" [(ngModel)]="currentStudent.phoneNumber"
+      name="phoneNumber" />
+    <div class="form-group">
+      <label for="userName">User Name</label>
+      <input type="text" class="form-control" id="userName" [(ngModel)]="currentStudent.userName" name="userName" />
+      <div class="form-group">
+        <label for="userName">Date of Birth</label>
+        <input type="text" class="form-control" id="dob" [(ngModel)]="res" name="dob" />
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" [(ngModel)]="currentStudent.email" name="email" />
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="currentStudent.password"
+              name="password" />
+
+            <div>
+              <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="categories" [(ngModel)]="selected"
+                (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <button type="button" (click)="updateStudent()">Update</button>
+            <button type="button" (click)="deleteStudent()">Delete</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
