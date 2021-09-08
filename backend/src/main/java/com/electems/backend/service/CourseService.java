@@ -24,9 +24,6 @@ public class CourseService {
 	@Autowired
 	private CourseRepository courseRepository;
 	
-	@Autowired
-	private RegisterRepository registerRepository;
-
 	/**
 	 * to get list of course
 	 *
