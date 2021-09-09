@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,15 @@ public class CourseController {
 	@GetMapping("/courses")
 	public List<Course> getAllCourse(){
 		return courseService.getAllCourse();
+	}
+	
+	/**
+	 * to save list of course
+	 *
+	 */
+	@PostMapping("/course/{regId}")
+	public Course saveStudent(@RequestBody Course course,@PathVariable Integer regId) {
+		return courseService.save(course, regId);
 	}
 	
 }
