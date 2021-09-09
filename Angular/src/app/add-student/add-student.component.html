@@ -1,136 +1,159 @@
-<div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Success !</strong> Your data has been registered successfully.
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="register-form">
-  <form [formGroup]="form" (ngSubmit)="onSubmit(register)">
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" formControlName="fullName" class="form-control" [(ngModel)]="register.fullName"
-        [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" />
-      <div *ngIf="f.fullName.touched && f.fullName.errors" class="text-danger">
-        <div *ngIf="f.fullName.errors.required">Fullname is required</div>
-      </div>
-    </div>
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <div class="register-form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(register)">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" formControlName="fullName" class="form-control" [(ngModel)]="register.fullName"
+              [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" />
+            <div *ngIf="f.fullName.touched && f.fullName.errors" class="text-danger">
+              <div *ngIf="f.fullName.errors.required">Fullname is required</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="number" formControlName="phoneNumber" class="form-control" [(ngModel)]="register.phoneNumber"
+              [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+            <div *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" class="text-danger">
+              <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" formControlName="dob" class="form-control" [(ngModel)]="register.dob"
+              [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" />
+            <div *ngIf="f.dob.touched && f.dob.errors" class="text-danger">
+              <div *ngIf="f.dob.errors.required">DOB is required</div>
+              </div>
+          </div>
+      
+          
+      
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="form-control" [(ngModel)]="register.email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="f.email.touched && f.email.errors" class="text-danger">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email is invalid</div>
+            </div>
+          </div>
 
-    <div class="form-group">
-      <label>Phone Number</label>
-      <input type="number" formControlName="phoneNumber" class="form-control" [(ngModel)]="register.phoneNumber"
-        [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
-      <div *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" class="text-danger">
-        <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Date of Birth</label>
-      <input type="date" formControlName="dob" class="form-control" [(ngModel)]="register.dob"
-        [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" />
-      <div *ngIf="f.dob.touched && f.dob.errors" class="text-danger">
-        <div *ngIf="f.dob.errors.required">DOB is required</div>
-        <!-- <div *ngIf="f.dob.errors.pattern">Please enter valid dob</div> -->
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" (blur)="onBlurEvent(register.userName)" formControlName="userName" class="form-control"
-        [(ngModel)]="register.userName" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
-      <div *ngIf="f.userName.touched && f.userName.errors" class="text-danger">
-        <div *ngIf="f.userName.errors.required">Username is required</div>
-        <div *ngIf="f.userName.errors.minlength">
-          Username must be at least 6 characters
+          <div class="form-group">
+            <div class="register-form">
+            <form [formGroup]="form" (ngSubmit)="onSubmit(register)">
+            <label>Username</label>
+            <input type="text" (blur)="onBlurEvent(register.userName)" formControlName="userName" class="form-control"
+              [(ngModel)]="register.userName" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+            <div *ngIf="f.userName.touched && f.userName.errors" class="text-danger">
+              <div *ngIf="f.userName.errors.required">Username is required</div>
+              <div *ngIf="f.userName.errors.minlength">
+                Username must be at least 6 characters
+              </div>
+              <div *ngIf="f.userName.errors.maxlength">
+                Username must not exceed 20 characters
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="duplicate">
+              Username is duplicate
+            </div>
+          
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" formControlName="password" class="form-control" [(ngModel)]="register.password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="f.password.touched && f.password.errors" class="text-danger">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+              <div *ngIf="f.password.errors.maxlength">
+                Username must not exceed 40 characters
+              </div>
+            </div>
+          </div>
+    
+          
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="confirmPassword" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+          <div *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="text-danger">
+            <div *ngIf="f.confirmPassword.errors.required">
+              Confirm Password is required
+            </div>
+            <div *ngIf="f.confirmPassword.errors.ConfirmedValidator">
+              Confirm Password does not match
+            </div>
+          </div>
         </div>
-        <div *ngIf="f.userName.errors.maxlength">
-          Username must not exceed 20 characters
+        
+        <div class="form-group form-check">
+          <input type="checkbox" formControlName="acceptTerms" class="form-check-input"
+            [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
+          <label for="acceptTerms" class="form-check-label">I have read and agree to the Terms</label>
+          <div *ngIf="f.acceptTerms.touched && f.acceptTerms.errors" class="text-danger">
+            Accept Terms is required
+          </div>
         </div>
-      </div>
-      <div class="text-danger" *ngIf="duplicate">
-        Username is duplicate
-      </div>
-    </div>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input type="text" formControlName="email" class="form-control" [(ngModel)]="register.email"
-        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-      <div *ngIf="f.email.touched && f.email.errors" class="text-danger">
-        <div *ngIf="f.email.errors.required">Email is required</div>
-        <div *ngIf="f.email.errors.email">Email is invalid</div>
-      </div>
-    </div>
-
-    <!-- <label>Country:</label>
-    <select [(ngModel)]="selectedCountry.id" (change)="onSelect((<HTMLInputElement>event.target).value)">
-      <option value="0">--Select--</option>
-      <option *ngFor="let country of countries" value={{country.id}}>{{country.name}}</option>
-    </select>
-
-    <br /><br /> -->
-<!-- 
-    <div>
-      <label>State:</label>
-      <select>
-        <option value="0">--Select--</option>
-        <option *ngFor="let state of states " value={{state.id}}>{{state.name}}</option>
-      </select>
-    </div> -->
-
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" formControlName="password" class="form-control" [(ngModel)]="register.password"
-        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-      <div *ngIf="f.password.touched && f.password.errors" class="text-danger">
-        <div *ngIf="f.password.errors.required">Password is required</div>
-        <div *ngIf="f.password.errors.minlength">
-          Password must be at least 6 characters
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Register</button>
+          <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+            Reset
+          </button>
         </div>
-        <div *ngIf="f.password.errors.maxlength">
-          Username must not exceed 40 characters
-        </div>
+      
+      <div>
+        <button mat-button matStepperNext>Next</button>
       </div>
-    </div>
+    </form>
 
-    <div class="form-group">
-      <label>Confirm Password</label>
-      <input type="password" formControlName="confirmPassword" class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-      <div *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="text-danger">
-        <div *ngIf="f.confirmPassword.errors.required">
-          Confirm Password is required
-        </div>
-        <div *ngIf="f.confirmPassword.errors.ConfirmedValidator">
-          Confirm Password does not match
-        </div>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <div class="register-form">
+        <form [formGroup]="form" (ngSubmit)="addCourse(course)">
+          <div class="form-group">
+            <label>Course Name</label>
+            <input type="text" formControlName="name" class="form-control" [(ngModel)]="course.name"
+              [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="f.name.touched && f.name.errors" class="text-danger">
+              <div *ngIf="f.name.errors.required">Course name is required</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Course Duration</label>
+            <input type="number" formControlName="duration" class="form-control" [(ngModel)]="course.duration"
+              [ngClass]="{ 'is-invalid': submitted && f.duration.errors }" />
+            <div *ngIf="f.duration.touched && f.duration.errors" class="text-danger">
+              <div *ngIf="f.duration.errors.required">Course duration is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+              Reset
+            </button>
+          </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
-    </div>
-    <div>
-      <ng-multiselect-dropdown
-        [settings]="dropdownSettings"
-        [data]="categories"
-        [(ngModel)]="selected"
-        (onSelect)="onItemSelect($event)"
-        (onSelectAll)="onSelectAll($event)"
-    >
-    </ng-multiselect-dropdown>
-    </div>
-
-    <div class="form-group form-check">
-      <input type="checkbox" formControlName="acceptTerms" class="form-check-input"
-        [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
-      <label for="acceptTerms" class="form-check-label">I have read and agree to the Terms</label>
-      <div *ngIf="f.acceptTerms.touched && f.acceptTerms.errors" class="text-danger">
-        Accept Terms is required
-      </div>
-    </div>
-
+    </form>
+  
+  <mat-step>
+    <div class="register-form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(register)">
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Register</button>
       <button type="button" (click)="onReset()" class="btn btn-warning float-right">
         Reset
       </button>
     </div>
-  </form>
-</div>
+

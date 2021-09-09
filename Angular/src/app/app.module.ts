@@ -23,6 +23,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogService } from './confirmation-dialog.service';
+import { MatStepperModule } from '@angular/material/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 const materialModules = [
   MatTableModule,
@@ -50,11 +54,13 @@ const materialModules = [
     HttpClientModule,
     CommonModule,
     ...materialModules,
-  
+    MatStepperModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
     NgxPaginationModule,
-    HttpClientModule,
+    BrowserAnimationsModule, 
+    MatInputModule, 
+    MatButtonModule,
     NgMultiSelectDropDownModule.forRoot(),
     NoopAnimationsModule     
   ],

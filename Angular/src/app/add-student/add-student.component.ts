@@ -17,15 +17,18 @@ import { SelectService } from '../select.service';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
+
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
   
-  selectedCountry: Country = new Country(2, 'Brazil');
-  countries?: Country[];
-  states?: State[];
+  // selectedCountry: Country = new Country(2, 'Brazil');
+  // countries?: Country[];
+  // states?: State[];
 
   categories :any = [];
 
   selected:any = [];
-
+  static regId:number;
   alert: boolean = false;
   register: Student = {
     id: '',
@@ -35,9 +38,14 @@ export class AddStudentComponent implements OnInit {
     phoneNumber: '',
     password: '',
     dob: '',
-    courses:{}
-      
-  };
+    //courses:{}
+    };
+
+    course: Course={
+      id:'',
+      name:'',
+      duration:''
+    }
   duplicate = false;
   coursesList: any;
   form!: FormGroup;
@@ -51,7 +59,8 @@ export class AddStudentComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public alertService: AlertService,
-    private selectService: SelectService
+    private selectService: SelectService,
+    private _formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -65,8 +74,15 @@ export class AddStudentComponent implements OnInit {
    }
     this.getAllCourses();
 
-    this.countries = this.selectService.getCountries();
-    this.onSelect(this.selectedCountry.id);
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+
+    // this.countries = this.selectService.getCountries();
+    // this.onSelect(this.selectedCountry.id);
 
     this.form = this.formBuilder.group(
       {
@@ -85,6 +101,10 @@ export class AddStudentComponent implements OnInit {
         phoneNumber: ['', [Validators.required]],
 
         dob: ['', [Validators.required]],
+
+        name: ['', [Validators.required]],
+
+        duration: ['', [Validators.required]],
 
         course: [{}, [Validators.required]],
 
@@ -162,6 +182,21 @@ export class AddStudentComponent implements OnInit {
     //     console.log(error);
     //   });
 
+
+  }
+
+  addCourse(data: any){
+
+    this.tutorialService.saveCourse(this.register.id, this.course)
+    .subscribe(
+      response => {
+        this.router.navigate(['/student-list']);
+        console.log(response);
+        this.alertService.info('Course updated successfully !!');
+      },
+      error => {
+        console.log(error);
+      });
 
   }
 
